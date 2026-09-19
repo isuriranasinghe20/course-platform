@@ -24,30 +24,43 @@ const Login = () => {
   };
 
   return (
-    <div className="auth-container">
-      <form className="auth-card" onSubmit={handleSubmit}>
+    <div className="auth-page">
+      <div className="auth-panel-card auth-panel-card-compact auth-panel-card-small">
         <h2>Login</h2>
+
         {error && <div className="alert alert-error">{error}</div>}
-        <input
-          placeholder="Username"
-          value={form.username}
-          onChange={(e) => setForm({ ...form, username: e.target.value })}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
-          required
-        />
-        <button className="btn btn-primary" disabled={loading}>
-          {loading ? 'Logging in...' : 'Login'}
-        </button>
-        <p className="muted">
-          No account? <Link to="/register">Register here</Link>
+
+        <form className="auth-form" onSubmit={handleSubmit}>
+          <input
+            className="auth-input"
+            type="text"
+            placeholder="Username"
+            value={form.username}
+            onChange={(e) => setForm({ ...form, username: e.target.value })}
+            required
+          />
+
+          <div className="password-wrap">
+            <input
+              className="auth-input"
+              type="password"
+              placeholder="Password"
+              value={form.password}
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
+              required
+            />
+            <span className="password-eye">◌</span>
+          </div>
+
+          <button className="auth-submit-btn" type="submit" disabled={loading}>
+            {loading ? 'Logging in...' : 'LOGIN'}
+          </button>
+        </form>
+
+        <p className="auth-footer-text">
+          No account yet? <Link to="/register">Register here</Link>
         </p>
-      </form>
+      </div>
     </div>
   );
 };

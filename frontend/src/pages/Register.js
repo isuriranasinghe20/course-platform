@@ -28,51 +28,64 @@ const Register = () => {
   };
 
   return (
-    <div className="auth-container">
-      <form className="auth-card" onSubmit={handleSubmit}>
+    <div className="auth-page">
+      <div className="auth-panel-card auth-panel-card-compact">
         <h2>Create Account</h2>
+
         {error && <div className="alert alert-error">{error}</div>}
-        <input
-          placeholder="Username"
-          value={form.username}
-          onChange={(e) => setForm({ ...form, username: e.target.value })}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password (min 6 chars)"
-          value={form.password}
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
-          required
-        />
-        <label className="radio-group">
-          <span>I am a:</span>
-          <label>
+
+        <form className="auth-form" onSubmit={handleSubmit}>
+          <div className="auth-role-group">
+            <label className={`auth-role-option ${form.role === 'student' ? 'active' : ''}`}>
+              <input
+                type="radio"
+                value="student"
+                checked={form.role === 'student'}
+                onChange={(e) => setForm({ ...form, role: e.target.value })}
+              />
+              <span>Student</span>
+            </label>
+            <label className={`auth-role-option ${form.role === 'instructor' ? 'active' : ''}`}>
+              <input
+                type="radio"
+                value="instructor"
+                checked={form.role === 'instructor'}
+                onChange={(e) => setForm({ ...form, role: e.target.value })}
+              />
+              <span>Instructor</span>
+            </label>
+          </div>
+
+          <input
+            className="auth-input"
+            type="text"
+            placeholder="Username"
+            value={form.username}
+            onChange={(e) => setForm({ ...form, username: e.target.value })}
+            required
+          />
+
+          <div className="password-wrap">
             <input
-              type="radio"
-              value="student"
-              checked={form.role === 'student'}
-              onChange={(e) => setForm({ ...form, role: e.target.value })}
+              className="auth-input"
+              type="password"
+              placeholder="Password"
+              value={form.password}
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
+              required
             />
-            Student
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="instructor"
-              checked={form.role === 'instructor'}
-              onChange={(e) => setForm({ ...form, role: e.target.value })}
-            />
-            Instructor
-          </label>
-        </label>
-        <button className="btn btn-primary" disabled={loading}>
-          {loading ? 'Creating...' : 'Register'}
-        </button>
-        <p className="muted">
+            <span className="password-eye">◌</span>
+          </div>
+
+          <button className="auth-submit-btn" type="submit" disabled={loading}>
+            {loading ? 'Creating...' : 'REGISTER'}
+          </button>
+        </form>
+
+        <p className="auth-footer-text">
           Already have an account? <Link to="/login">Login</Link>
         </p>
-      </form>
+      </div>
     </div>
   );
 };

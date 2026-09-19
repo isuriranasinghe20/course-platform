@@ -1,25 +1,32 @@
 import { Link } from 'react-router-dom';
 
-const CourseCard = ({ course, onEnroll, enrolled }) => {
+const CourseCard = ({ course, onEnroll, enrolled, learnerCount = 0 }) => {
   return (
-    <div className="card">
-      <h3>{course.title}</h3>
-      <p className="muted">
-        By {course.instructor?.username || 'Unknown'} • {course.category} •{' '}
-        {course.level}
+    <div className="catalog-card">
+      <div className="catalog-card-header">
+        <div>
+          <span className="catalog-tag">{course.category || 'General'}</span>
+          <h3>{course.title}</h3>
+        </div>
+        <span className="learner-pill">{learnerCount} learners</span>
+      </div>
+
+      <p className="catalog-meta">
+        By {course.instructor?.username || 'Unknown'} • {course.level || 'Beginner'}
       </p>
-      <p>{course.description}</p>
-      <div className="card-actions">
-        <Link to={`/courses/${course._id}`} className="btn btn-secondary">
-          View Details
+      <p className="catalog-description">{course.description}</p>
+
+      <div className="catalog-card-footer">
+        <Link to={`/courses/${course._id}`} className="catalog-link">
+          View details
         </Link>
         {onEnroll && (
           <button
-            className="btn btn-primary"
+            className="catalog-enroll-btn"
             onClick={() => onEnroll(course._id)}
             disabled={enrolled}
           >
-            {enrolled ? 'Enrolled ✓' : 'Enroll'}
+            {enrolled ? 'Enrolled' : 'Enroll'}
           </button>
         )}
       </div>

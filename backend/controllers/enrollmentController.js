@@ -69,8 +69,24 @@ const getCourseEnrollments = asyncHandler(async (req, res) => {
   res.json(enrollments);
 });
 
+// @desc    Get enrollment count for a course
+// @route   GET /api/enrollments/count/:courseId
+// @access  Private
+const getCourseEnrollmentCount = asyncHandler(async (req, res) => {
+  const course = await Course.findById(req.params.courseId);
+  if (!course) {
+    res.status(404);
+    throw new Error('Course not found');
+  }
+
+  const count = await Enrollment.countDocuments({ course: course._id });
+
+  res.json({ courseId: course._id, count });
+});
+
 module.exports = {
   enrollInCourse,
   getMyEnrollments,
   getCourseEnrollments,
+  getCourseEnrollmentCount,
 };
